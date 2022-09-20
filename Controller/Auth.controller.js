@@ -19,9 +19,7 @@ const login = async (req, res) => {
     if (!match) {
       return res.status(400).send({ error: "Invalid email or password" });
     }
-
     const token = newToken(user);
-
     return res.status(200).send({ user, token });
   } catch (error) {
     return res.status(500).send({ Error: error.message });
@@ -45,13 +43,4 @@ const Register = async (req, res) => {
   }
 };
 
-const logout = async (req, res) => {
-    try {
-    res.clearCookie("token",{path:'/'})
-      return res.status(200).send("User Logout");
-    } catch (error) {
-      return res.status(500).send({ Error: error.message });
-    }
-  };
-
-module.exports = { login, Register,logout };
+module.exports = { login, Register };

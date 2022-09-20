@@ -3,15 +3,13 @@ const app=express()
 const cors = require("cors")
 const Connect=require("./Configs/Connect")
 const { body } = require("express-validator")
-const { login, Register, logout } = require("./Controller/Auth.controller")
+const { login, Register } = require("./Controller/Auth.controller")
 const FormData=require("./Controller/FormData.controller")
 app.use(express.json())
 app.use(cors({ origin: "*" }))
 
 app.use("/login",
     login)
-    app.use("/logout",
-    logout)
 
 app.use("/register",
     body("name").isString().isLength({ min: 5 }),

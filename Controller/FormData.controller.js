@@ -1,9 +1,9 @@
 const express = require('express');
-const authenticate = require('../Middleware/authenticate');
+// const authenticate = require('../Middleware/authenticate');
 const router = express.Router()
 const FormData = require("../Model/FormData.model")
 
-router.post("",authenticate,async(req,res)=>{
+router.post("",async(req,res)=>{
     try {
         const formData = await FormData.create(req.body);
         res.send(formData)
@@ -13,7 +13,7 @@ router.post("",authenticate,async(req,res)=>{
 })
 
 
-router.get("",authenticate,async(req,res)=>{
+router.get("",async(req,res)=>{
     try {
         const formData  = await FormData.find().lean().exec();
         res.send(formData)
@@ -22,7 +22,7 @@ router.get("",authenticate,async(req,res)=>{
         return res.status(500).send(err.message)
     }
 })
-router.patch("/:id",authenticate,async(req,res)=>{
+router.patch("/:id",async(req,res)=>{
     try {
         const formData = await FormData.findByIdAndUpdate(req.params.id,req.body,{new:true}).lean().exec()
         res.send(formData)
@@ -31,7 +31,7 @@ router.patch("/:id",authenticate,async(req,res)=>{
     }
 })
 
-router.delete("/:id",authenticate,async(req,res)=>{
+router.delete("/:id",async(req,res)=>{
     try {
         const formData  = await FormData.findByIdAndDelete(req.params.id);
         return res.send(formData)

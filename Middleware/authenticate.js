@@ -2,18 +2,22 @@ const jwt= require("jsonwebtoken")
 const User = require("../Model/User.model");
 const authenticate= async(req,res,next)=>{
     try {
-        const token=req.headers.authorization
+        let token=req.headers.authorization
+        console.log(token,"thiss is 11")
+        token=token.split(" ")[1]
+        console.log(token,"here is token")
         const verifyToken=jwt.verify(token,process.env.JWT_KEY)
-        const rootUser=await User.findOne({_id:verifyToken._id,"token":token})
+        console.log(verifyToken,"verifying")
+        const rootUser=await User.findOne({_id:verifyToken.user._id})
+        console.log(rootUser,"root")
         if(!rootUser)
         {
             throw new error('User not found')
         }
-        req.token=token
-        req.user=rootUser
-        req.user._id=rootUser._id
+        req.body.user=rootUser
         next();
-    } catch (error) {
+    } catch (error)
+    {
         res.status(401).send("Unauthorized")
     }
 

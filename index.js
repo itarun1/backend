@@ -5,11 +5,13 @@ const Connect=require("./Configs/Connect")
 const { body } = require("express-validator")
 const { login, Register } = require("./Controller/Auth.controller")
 const FormData=require("./Controller/FormData.controller")
+const DummyData=require("./Controller/dummyData.contoller")
 app.use(express.json())
 app.use(cors({ origin: "*" }))
 
 app.use("/login",
     login)
+    app.use("/dummy",DummyData)
 
 app.use("/register",
     body("name").isString().isLength({ min: 5 }),
